@@ -81,7 +81,7 @@ function _highLightCode(str, callback, hljsLangFuc) {
         }
         if (need_langs.length === 0) {
             for (i = 0; i < pre_code.length; i++) {
-                 lang = pre_code[i].className;
+                lang = pre_code[i].className;
                 // if lang is valid.
                 if (lang.length > 0 && hljs.getLanguage(lang)) {
                     hljs.highlightBlock(pre_code[i])

@@ -143,8 +143,7 @@ const converterImg = {
         var alt = tag.getAttribute('alt');
         if (rel && alt) {
             return '![' + alt + ']' + '(' + rel + ')'
-        }
-        else {
+        } else {
             var src = tag.getAttribute('src');
             return '![' + alt + ']' + '(' + src + ')'
         }

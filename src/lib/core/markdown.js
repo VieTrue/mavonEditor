@@ -16,11 +16,11 @@ import hljsLangs from './hljs/lang.hljs.js'
  */
 // default mode
 var markdown_config = {
-    html: true,        // Enable HTML tags in source
-    xhtmlOut: true,        // Use '/' to close single tags (<br />).
-    breaks: true,        // Convert '\n' in paragraphs into <br>
-    langPrefix: 'language-',  // CSS language prefix for fenced blocks. Can be
-    linkify: false,        // 自动识别url
+    html: true, // Enable HTML tags in source
+    xhtmlOut: true, // Use '/' to close single tags (<br />).
+    breaks: true, // Convert '\n' in paragraphs into <br>
+    langPrefix: 'language-', // CSS language prefix for fenced blocks. Can be
+    linkify: false, // 自动识别url
     typographer: true,
     quotes: '“”‘’',
     highlight: function (str, lang) {
@@ -62,7 +62,7 @@ markdown.renderer.rules.link_open = function (tokens, idx, options, env, self) {
     if (aIndex < 0) {
         tokens[idx].attrPush(['target', '_blank']); // add new attribute
     } else {
-        tokens[idx].attrs[aIndex][1] = '_blank';    // replace value of existing attr
+        tokens[idx].attrs[aIndex][1] = '_blank'; // replace value of existing attr
     }
 
     // pass token to default renderer.
@@ -77,8 +77,8 @@ markdown.use(emoji)
     .use(sub)
     .use(container)
     .use(container, 'hljs-left') /* align left */
-    .use(container, 'hljs-center')/* align center */
-    .use(container, 'hljs-right')/* align right */
+    .use(container, 'hljs-center') /* align center */
+    .use(container, 'hljs-right') /* align right */
     .use(deflist)
     .use(abbr)
     .use(footnote)

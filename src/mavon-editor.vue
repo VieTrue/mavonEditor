@@ -38,13 +38,12 @@
             <div :class="{'single-show': (!s_subfield && s_preview_switch) || (!s_subfield && s_html_code)}"
                  v-show="s_preview_switch || s_html_code" class="v-note-show">
                 <div ref="vShowContent" v-html="d_render" v-show="!s_html_code"
-                     :class="{'scroll-style': s_scrollStyle, 'scroll-style-border-radius': s_scrollStyle}" class="v-show-content"
-                     :style="{'background-color': previewBackground}">
+                     :class="{'scroll-style': s_scrollStyle, 'scroll-style-border-radius': s_scrollStyle}" class="v-show-content" id="vShowContent">
                 </div>
-                <div v-show="s_html_code" :class="{'scroll-style': s_scrollStyle, 'scroll-style-border-radius': s_scrollStyle}" class="v-show-content-html"
-                  :style="{'background-color': previewBackground}">
+                <div v-show="s_html_code" :class="{'scroll-style': s_scrollStyle, 'scroll-style-border-radius': s_scrollStyle}" class="v-show-content-html">
                     {{d_render}}
                 </div>
+                <div id="f-data" style="display:none;"></div>
             </div>
 
             <!--标题导航-->
@@ -89,6 +88,7 @@
 
 <script>
 // import tomarkdown from './lib/core/to-markdown.js'
+import $ from "jquery";
 import {autoTextarea} from 'auto-textarea'
 import {keydownListen} from './lib/core/keydown-listen.js' 
 import hljsCss from './lib/core/hljs/lang.hljs.css.js'
@@ -286,7 +286,8 @@ export default {
                     return 'https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css';
                 },
                 hljs_js: function() {
-                    return 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js';
+                    return '/static/highlight.min.js';
+                    // return 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js';
                 },
                 hljs_lang: function(lang) {
                     return 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/' + lang + '.min.js';
@@ -653,6 +654,23 @@ export default {
                 }
                 // 改变标题导航
                 if ($vm.s_navigation) getNavigation($vm, false);
+
+                if (res) {
+                    $('#f-data').html(res)
+                    if($('#f-data').find('pre>div.hljs>code span')){
+                        $('#f-data').find('pre>div.hljs>code').each(function(i,item){
+                            if ($(item).text() != '') {
+                                $(item).replaceWith('<ol class="'+$(item).attr('class')+'">'+$(item).html()+'</ol>')
+                            } else {
+                                $(item).parents('div.hljs').parents('pre').remove()
+                            }
+                            
+                        })
+                        $vm.d_render = $('#f-data').html();
+
+                    }
+                }
+
                 // v-model 语法糖
                 $vm.$emit('input', $vm.d_value)
                 // 塞入编辑记录数组
